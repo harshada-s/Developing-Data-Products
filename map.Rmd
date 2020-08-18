@@ -1,0 +1,30 @@
+---
+title: "Literacy Map"
+date: "18 August 2020"
+author: "Harshada Sasturkar"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,cache=TRUE)
+```
+
+This map shows ten metropolitan cities in India and their Literacy rate.
+
+```{r}
+library(leaflet)
+city<-c("Mumbai","Delhi","Bangalore","Hyderabad","Ahmedabad","Chennai","Kolkata","Surat","Pune","Jaipur")
+lat<-c(19.0760,28.7041,12.9716,17.3850,23.0225,13.0827,22.5726,21.1702,18.5204,26.9124)
+lng<-c(72.877426,77.230003,77.5946,78.4867,72.5714,80.2707,88.3639,72.8311,73.8567,75.7873)
+literacy<-c(89.73,87.59,88.71,83.26,88.29,90.18,86.31,87.89,89.56,83.33)
+india<-as.data.frame(city)
+india$lat<-lat
+india$lng<-lng
+india$literacy<-literacy
+india$popup<-paste("Literacy rate:",india$literacy)
+
+bookIcon<-icons(iconUrl = "bookIcon.png",iconWidth = 40,iconHeight = 40)
+
+my_map<-leaflet()%>%addTiles()%>%addMarkers(lng=india$lng,lat=india$lat,icon=bookIcon,label = india$city,popup = india$popup)
+my_map
+```
